@@ -1,35 +1,70 @@
-import React, { useEffect, useState} from 'react';
 import "./login/index.scss";
-import { Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import Dashboard from "./dashboard";
-import Login from "./login"
+import Login from "./login";
 import Homepage from "./homepage";
-import {getAuth, getIdToken, onAuthStateChanged, onIdTokenChanged, getIdTokenResult} from "firebase/auth";
-import {auth} from "./firebase-config";
-import PrivateRoute from "./privateRoute";
+import { getAuth } from "firebase/auth";
+import { app } from "./firebase-config";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+export const RequiredAuth: React.FC<{ children: JSX.Element }> = ({
+  children,
+}) => {
+  let location = useLocation();
+  const auth = getAuth(app);
+  const [user, loading, error] = useAuthState(auth);
+  if (loading) {
+    return (
+      <div>
+        <p>Initialising User...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+  if (user) {
+    return children;
+  }
+};
 
 const App = () => {
-    const [jwt,setJwt] = useState();
-    onAuthStateChanged(auth, (currentUser) => {
-
-        localStorage.setItem('jwt', jwt);
-    } )
-    useEffect(() => {
-        console.log(`JWT is: ${jwt}`);
-    }, [jwt])
-    return (
-        <Routes>
-            <Route path="/dashboard" element={
-                <PrivateRoute>
-                    <Dashboard/>
-                </PrivateRoute>
-            }
-            />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/" element={<Homepage />} />
-        </Routes>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/home"
+          element={
+            <RequiredAuth>
+              <Homepage />
+            </RequiredAuth>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <RequiredAuth>
+              <Dashboard />
+            </RequiredAuth>
+          }
+        />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;
-// TODO: Разобраться с недопуском пользователя на другие страницы без аутентификации
