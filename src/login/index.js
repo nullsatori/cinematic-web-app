@@ -50,7 +50,7 @@ const Login = () => {
     await signOut(auth);
   };
   return (
-    <div className="Auth">
+    <div id="Auth">
       <div className="main">
         <input type="checkbox" id="chk" aria-hidden="true" />
         <div className="signup">
@@ -86,8 +86,6 @@ const Login = () => {
               required=""
             />
             <button onClick={register}>Sign up</button>
-            {user?.email}
-            {registerUserName}
           </form>
         </div>
 
@@ -115,7 +113,6 @@ const Login = () => {
               required=""
             />
             <button onClick={login}>Login</button>
-            <button onClick={logout}>logout</button>
           </form>
         </div>
       </div>

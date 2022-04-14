@@ -10,7 +10,7 @@ import Dashboard from "./dashboard";
 import Login from "./login";
 import Homepage from "./homepage";
 import { getAuth } from "firebase/auth";
-import { app } from "./firebase-config";
+import { app } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export const RequiredAuth: React.FC<{ children: JSX.Element }> = ({
