@@ -15,8 +15,10 @@ const Dashboard = () => {
     }
   };
   const handleClickPicture = () => {
-    upload(photo, currentUser, setLoading);
-    console.log(currentUser);
+    upload(photo, currentUser, setLoading).then(() => {
+      console.log(currentUser);
+      window.location.reload();
+    });
   };
   useEffect(() => {
     if (currentUser?.photoURL) {
@@ -27,22 +29,25 @@ const Dashboard = () => {
     <div id="Dashboard">
       <h1>DASHBOARD</h1>
       <div id="userOptions">
+        <div id="user__info">
+          <div id="email">
+            <p>{currentUser?.email}</p>
+          </div>
+        </div>
         <div id="profile__picture">
           <img
             src={photoURL}
             className="profile__picture__image"
             alt="user__profile__picture"
           />
-          <input type="file" onChange={handleChange} />
+          <input
+            type="file"
+            onChange={handleChange}
+            accept=".jpg, .jpeg, .png"
+          />
           <button disabled={loading || !photo} onClick={handleClickPicture}>
             Change profile picture
           </button>
-        </div>
-        <div id="user__info">
-          <div id="email">
-            <p>{currentUser?.email}</p>
-            <input type="text" onChange={handleChange} />
-          </div>
         </div>
       </div>
     </div>

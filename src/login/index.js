@@ -6,8 +6,9 @@ import {
   signOut,
   getAuth,
 } from "firebase/auth";
-
+import { Navigate, useLocation } from "react-router-dom";
 const Login = () => {
+  let location = useLocation();
   const auth = getAuth();
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -17,6 +18,10 @@ const Login = () => {
   const [user, setUser] = useState({});
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
+    console.log(currentUser.email);
+    if (currentUser.email) {
+      return <Navigate to="/home" state={{ from: location }} />;
+    }
   });
   const register = async (e) => {
     e.preventDefault();
@@ -58,15 +63,6 @@ const Login = () => {
             <label htmlFor="chk" aria-hidden="true">
               Sign up
             </label>
-            <input
-              type="text"
-              name="txt"
-              placeholder="Username"
-              required=""
-              onChange={(event) => {
-                setRegisterUserName(event.target.value);
-              }}
-            />
             <input
               type="email"
               name="email"
