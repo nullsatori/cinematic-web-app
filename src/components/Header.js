@@ -10,8 +10,11 @@ const Header = () => {
         <Link to="/dashboard" replace>
           dashboard
         </Link>
-        <Link to="/home" replace>
-          homepage
+        <Link to="/search" replace>
+          search
+        </Link>
+        <Link to="/watchlist" replace>
+          watchlist
         </Link>
         <button
           disabled={!auth}

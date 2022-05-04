@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { doc, setDoc } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -7,7 +8,7 @@ import {
   getAuth,
 } from "firebase/auth";
 import { Navigate, useLocation } from "react-router-dom";
-const Login = () => {
+const Auth = () => {
   let location = useLocation();
   const auth = getAuth();
   const [registerEmail, setRegisterEmail] = useState("");
@@ -116,4 +117,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Auth;

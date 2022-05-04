@@ -1,4 +1,4 @@
-import "./login/index.scss";
+import "./index.scss";
 import {
   Routes,
   Route,
@@ -6,14 +6,16 @@ import {
   useLocation,
   BrowserRouter as Router,
 } from "react-router-dom";
-
-import Dashboard from "./dashboard";
-import Login from "./login";
-import Homepage from "./homepage";
+import WatchList from "./components/WatchList";
+import DashBoard from "./components/DashBoard";
+import Auth from "./components/Auth";
+import Search from "./components/Search";
 import { getAuth } from "firebase/auth";
 import { app } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Header from "./header";
+import Header from "./components/Header";
+
+import { GlobalProvider } from "./components/context/GlobalState";
 
 export const RequiredAuth: React.FC<{ children: JSX.Element }> = ({
   children,
@@ -54,42 +56,54 @@ export const UnrequiredAuth: React.FC<{ children: JSX.Element }> = ({
   if (!user) {
     return children;
   } else {
-    return <Navigate to="/home" state={{ from: location }} />;
+    return <Navigate to="/search" state={{ from: location }} />;
   }
 };
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <UnrequiredAuth>
-              <Login />
-            </UnrequiredAuth>
-          }
-        />
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route
-          path="/home"
-          element={
-            <RequiredAuth>
-              <Header />
-              <Homepage />
-            </RequiredAuth>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <RequiredAuth>
-              <Header />
-              <Dashboard />
-            </RequiredAuth>
-          }
-        />
-      </Routes>
-    </Router>
+    <GlobalProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/auth"
+            element={
+              <UnrequiredAuth>
+                <Auth />
+              </UnrequiredAuth>
+            }
+          />
+          <Route path="/" element={<Navigate to="/search" />} />
+          <Route
+            path="/search"
+            element={
+              <RequiredAuth>
+                <Header />
+                <Search />
+              </RequiredAuth>
+            }
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              <RequiredAuth>
+                <Header />
+                <DashBoard />
+              </RequiredAuth>
+            }
+          />
+          <Route
+            path="/watchlist"
+            element={
+              <RequiredAuth>
+                <Header />
+                <WatchList />
+              </RequiredAuth>
+            }
+          />
+        </Routes>
+      </Router>
+    </GlobalProvider>
   );
 };
 
