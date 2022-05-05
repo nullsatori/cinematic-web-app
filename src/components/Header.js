@@ -5,16 +5,18 @@ const auth = getAuth();
 const Header = () => {
   return (
     <div id="Header">
-      <img src="/big_boss.gif" alt="logo" />
+      <Link to="/search" replace>
+        <img src="/big_boss.gif" alt="logo" />
+      </Link>
       <div>
-        <Link to="/dashboard" replace>
-          dashboard
-        </Link>
         <Link to="/search" replace>
           search
         </Link>
         <Link to="/watchlist" replace>
           watchlist
+        </Link>
+        <Link to="/dashboard" replace>
+          dashboard
         </Link>
         <button
           disabled={!auth}

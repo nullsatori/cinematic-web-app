@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { GlobalContext } from "./context/GlobalState";
 import MovieCard from "./MovieCard";
 
-//todo: styles for watchlist
-
+//todo: add ability to rate watched films
 const WatchList = () => {
   const { watchlist } = useContext(GlobalContext);
 

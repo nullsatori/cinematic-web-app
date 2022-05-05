@@ -25,7 +25,7 @@ export const RequiredAuth: React.FC<{ children: JSX.Element }> = ({
   const [user, loading, error] = useAuthState(auth);
   if (loading) {
     return (
-      <div className="loading">
+      <div className="loading__user">
         <p>Initialising User...</p>
       </div>
     );
@@ -45,7 +45,7 @@ export const UnrequiredAuth: React.FC<{ children: JSX.Element }> = ({
   const [user, loading, error] = useAuthState(auth);
   if (loading) {
     return (
-      <div className="loading">
+      <div className="loading__user">
         <p>Initialising User...</p>
       </div>
     );

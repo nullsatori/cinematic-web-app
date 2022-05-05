@@ -14,14 +14,14 @@ export const MovieControls = ({ type, movie }) => {
       {type === "watchlist" && (
         <>
           <button className="ctrl-btn" onClick={() => addMovieToWatched(movie)}>
-            <i className="fa-fw far fa-eye"></i>
+            <i className="gg-eye"></i>
           </button>
 
           <button
             className="ctrl-btn"
             onClick={() => removeMovieFromWatchlist(movie.id)}
           >
-            <i className="fa-fw fa fa-times"></i>
+            <i className="gg-remove-r"></i>
           </button>
         </>
       )}
